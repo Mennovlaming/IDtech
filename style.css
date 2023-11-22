@@ -5,20 +5,19 @@
 body, html {
   height: 100%;
   margin: 0;
-  overflow: hidden; /* Disable default body margin and scrollbars */
+  scroll-snap-type: y mandatory;
 }
 
 body {
   background: white;
   color: #2181ff;
   font-family: sans-serif;
-  overflow-y: scroll;
+  
 }
 
 .scroller {
   display: flex;
   flex-direction: column;
-  scroll-snap-type: y mandatory; /* Apply scroll-snap-type to the container */
 }
 
 .scroller section {

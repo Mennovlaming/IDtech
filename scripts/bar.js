@@ -1,69 +1,70 @@
-/* Example adapted from https://d3-graph-gallery.com/graph/barplot_basic.html */
-
 import * as d3 from "d3";
 
-//Dataset
-const data = [
-  { Jaar: 2023, Bezoekers: 80000 },
-  { Jaar: 2022, Bezoekers: 70000 },
-  { Jaar: 2021, Bezoekers: 0 },
-  { Jaar: 2020, Bezoekers: 0 },
-  { Jaar: 2019, Bezoekers: 40000 },
-  { Jaar: 2018, Bezoekers: 40000 },
-  { Jaar: 2017, Bezoekers: 30000 },
+
+var data = [
+  { edition: "ADE 2016", visitors: 375000 },
+  { edition: "ADE 2017", visitors: 395000 },
+  { edition: "ADE 2018", visitors: 400000 },
+  { edition: "ADE 2019", visitors: 400000 },
+  { edition: "ADE 2020 online", visitors: 0 },
+  { edition: "ADE 2021 online", visitors: 0 },
+  { edition: "ADE 2022", visitors: 450000 },
+  { edition: "ADE 2023", visitors: 500000 }
 ];
 
-//SVG, select body, 'append' een svg toe met attr w 400 en h 300,
-const svg = d3.select('article section:first-of-type').append('svg')
-  .attr('width', 400)
-  .attr('height', 300)
-  //voeg een groep(g) toe
-  .append('g')
-  .attr('transform', 'translate(50,50)');
+// Set up margins
+var margin = { top: 20, right: 20, bottom: 40, left: 100 };
+var width = 800 - margin.left - margin.right;
+var height = 400 - margin.top - margin.bottom;
 
-//Scale de x-as op basis van het jaartal, d.Jaar
-const xScale = d3.scaleBand()
-  .domain(data.map(d => d.Jaar))
-  .range([0, 300])
-  .padding(0.1);
+// Set up the SVG canvas
+var svg = d3.select("#chart")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  //Scale de y-as op het aantal Bezoekers.
-const yScale = d3.scaleLinear()
-  .domain([0, d3.max(data, d => d.Bezoekers)])
-  .range([200, 0]);
+// Set up scales
+var xScale = d3.scaleBand()
+  .domain(data.map(function(d) { return d.edition; }))
+  .range([0, width])
+  .padding(0.2);
 
-//Maak de barchart, eerst selecteer je de rechthoekige elementen (rect)
-svg.selectAll('rect')
+var yScale = d3.scaleLinear()
+  .domain([0, d3.max(data, function(d) { return d.visitors; })])
+  .range([height, 0]);
+
+// Create bars
+svg.selectAll("rect")
   .data(data)
   .enter()
-  .append('rect')
-  .attr('x', d => xScale(d.Jaar))
-  .attr('y', d => yScale(d.Bezoekers))
-  .attr('width', xScale.bandwidth())
-  .attr('height', d => 200 - yScale(d.Bezoekers))
-  .attr('fill', 'steelblue');
+  .append("rect")
+  .attr("x", function(d) { return xScale(d.edition); })
+  .attr("y", function(d) { return yScale(d.visitors); })
+  .attr("width", xScale.bandwidth())
+  .attr("height", function(d) { return height - yScale(d.visitors); })
+  .attr("fill", "steelblue");
 
-//x-as
-svg.append('g')
-  .attr('transform', 'translate(0,200)')
+// Add axes
+svg.append("g")
+  .attr("transform", "translate(0," + height + ")")
   .call(d3.axisBottom(xScale));
 
-//y-as
-svg.append('g')
-  .call(d3.axisLeft(yScale).ticks(5));
-  //met .ticks(5) kan je de weergave van aantallen aanpassen.
+svg.append("g")
+  .call(d3.axisLeft(yScale));
 
-// // X-as label
-// svg.append('text')
-//   .attr('transform', 'translate(150,250)')
-//   .style('text-anchor', 'middle')
-//   .text('Jaar');
+// Add labels
+svg.append("text")
+  .attr("x", width / 2)
+  .attr("y", height + margin.top + 10)
+  .style("text-anchor", "middle")
+  .text("ADE Editions");
 
-// // Y-as label
-// svg.append('text')
-//   .attr('transform', 'rotate(-90)')
-//   .attr('y', 0 - 40)
-//   .attr('x', 0 - 100)
-//   .attr('dy', '1em')
-//   .style('text-anchor', 'middle')
-//   .text('Bezoekers');
+svg.append("text")
+  .attr("transform", "rotate(-90)")
+  .attr("y", -margin.left)
+  .attr("x", -height / 2)
+  .attr("dy", "1em")
+  .style("text-anchor", "middle")
+  .text("Number of Visitors");
