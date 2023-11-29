@@ -13,13 +13,15 @@ const svg = d3.select('#intro')
   .attr('width', width - margin.left - margin.right)
   .attr('viewBox', [0, 0, width, height]); 
 
+  //bepaal hier de x-as
 const x = d3.scaleBand()
   .domain(d3.range(data.length))
   .range([margin.left, width - margin.right])
   .padding(0.1);
 
+  //bepaal hier de y-as
 const y = d3.scaleLinear()
-  .domain([0, d3.max(data, d => d.visitors)]) // Adjust the domain based on your data
+  .domain([0, d3.max(data, d => d.visitors)])
   .range([height - margin.bottom, margin.top]);
 
   //met append voeg je een 'groep' toe aan een svg
@@ -62,7 +64,7 @@ svg.selectAll('a')
       .call(d3.axisBottom(x).tickFormat((i) => data[i].edition))
       .style('font-size', '18px')
       .selectAll('.tick text')
-      .style('fill', 'black') // Set tick text color to black
+      .style('fill', 'black') //tick kleur aanpasssen (tick is streep)
       .call(wrap, x.bandwidth()); // Assuming x.bandwidth() is the maximum width you want for the tick text
   }
 
@@ -73,14 +75,17 @@ svg.selectAll('a')
       
   }
 
+  //Voor deze functie ChatGPT gebruikt, kwam er niet uit, hier word tekst gewrapt zodat hij mooier in de chart past.
   function wrap(text, width) {
+    
     text.each(function () {
+      //voor elk text element voert hij deze code uit.
       var text = d3.select(this),
-        words = text.text().split(/\s+/).reverse(),
+        words = text.text().split(/\s+/).reverse(),//de tekst wordt gesplitst in losse woorden
         word,
         line = [],
         lineNumber = 0,
-        lineHeight = 1.1, // ems
+        lineHeight = 1.1, //ems
         y = text.attr('y'),
         dy = parseFloat(text.attr('dy')) || 0,
         tspan = text.text(null).append('tspan').attr('x', 0).attr('y', y).attr('dy', dy + 'em');
