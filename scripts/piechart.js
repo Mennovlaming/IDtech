@@ -1,8 +1,8 @@
 import * as d3 from "d3";
 
-
+console.log('piechart.js');
 d3.json('./data.json').then((data) => {
-    console.log('piechart.js');
+   
   //functie maken voor 1 ade editie in dit geval
   function createPieChart(edition, index) {
     //gebruik deze data voor de chart
