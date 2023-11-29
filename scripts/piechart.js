@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 
 
-d3.json('data.json').then((data) => {
+d3.json('./data.json').then((data) => {
   //functie maken voor 1 ade editie in dit geval
   function createPieChart(edition, index) {
     //gebruik deze data voor de chart
