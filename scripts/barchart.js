@@ -1,8 +1,8 @@
 import * as d3 from "d3";
 
 //nu is het wel async waardoor de code pas uitgevoerd word als de data geladen is, vandaar de .then()
-d3.json('./data.json').then((data) => {
-
+d3.json('../data.json').then((data) => {
+console.log('barchart.js');
 const width = 1000;
 const height = 600;
 const margin = { top: 60, bottom: 60, left: 40, right: 40 }
