@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 
 //nu is het wel async waardoor de code pas uitgevoerd word als de data geladen is, vandaar de .then()
-d3.json('./data.json').then((data) => {
+d3.json('../data.json').then((data) => {
 
 const width = 1000;
 const height = 600;

@@ -6,4 +6,4 @@ import * as piechart from '/scripts/piechart.js';
 /* Default exports per components are a ✨ little prettier here */
 
 
-console.log('Hello Tech Track 6');
+console.log('Hello Tech Track 7');
