@@ -1,7 +1,29 @@
+
+
+
+
+
+
+
 import * as d3 from "d3";
 
+// Define the JSON data directly in the JavaScript file
+// d3.json('./data.json').then((data) => {
+const jsonData = [
+    { "edition": "ADE 2016", "visitors": 375000, "artists": 1800, "locations": 120, "outside": 20, "events": 450, "arests": 250 },
+    { "edition": "ADE 2017", "visitors": 395000, "artists": 2200, "locations": 160, "outside": 30, "events": 500, "arests": 120 },
+    { "edition": "ADE 2018", "visitors": 400000, "artists": 2500, "locations": 200, "outside": 40, "events": 550, "arests": 74 },
+    { "edition": "ADE 2019", "visitors": 400000, "artists": 2400, "locations": 200, "outside": 40, "events": 500, "arests": 80 },
+    { "edition": "ADE 2020 online", "visitors": 100000, "artists": 0, "locations": 0, "outside": 0, "events": 0, "arests": 0 },
+    { "edition": "ADE 2021 online", "visitors": 100000, "artists": 0, "locations": 0, "outside": 0, "events": 0, "arests": 0 },
+    { "edition": "ADE 2022", "visitors": 450000, "artists": 2500, "locations": 140, "outside": 20, "events": 450, "arests": 100 },
+    { "edition": "ADE 2023", "visitors": 500000, "artists": 2900, "locations": 200, "outside": 40, "events": 1000, "arests": 200 }
+];
+
 console.log('before data.json...');
-d3.json('./data.json').then((data) => {
+
+// Use the directly defined JSON data
+d3.json(jsonData).then((data) => {
   console.log('Data fetched successfully:', data);
   // ... rest of your code
 
