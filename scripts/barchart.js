@@ -1,7 +1,6 @@
 import * as d3 from "d3";
-console.log('barchart.js');
 
-// Define the JSON data directly in the JavaScript file
+//De data uit sheets:
 const jsonData = [
   { "edition": "ADE 2016", "visitors": 375000, "artists": 1800, "locations": 120, "outside": 20, "events": 450, "arests": 250 },
   { "edition": "ADE 2017", "visitors": 395000, "artists": 2200, "locations": 160, "outside": 30, "events": 500, "arests": 120 },
@@ -13,24 +12,25 @@ const jsonData = [
   { "edition": "ADE 2023", "visitors": 500000, "artists": 2900, "locations": 200, "outside": 40, "events": 1000, "arests": 200 }
 ];
 
-// Fetch data from the directly defined JSON data
+//hier de grootte variabelen
 const width = 1000;
 const height = 600;
 const margin = { top: 60, bottom: 60, left: 40, right: 40 }
 
+//werkt als een query selector, selecteer hier de div waar een svg in komt.
 const svg = d3.select('#intro')
   .append('svg')
   .attr('height', height - margin.top - margin.bottom)
   .attr('width', width - margin.left - margin.right)
   .attr('viewBox', [0, 0, width, height]); 
 
-// bepaal hier de x-as
+//bepaal hier de x-as
 const x = d3.scaleBand()
   .domain(d3.range(jsonData.length))
   .range([margin.left, width - margin.right])
   .padding(0.1);
 
-// bepaal hier de y-as
+//bepaal hier de y-as
 const y = d3.scaleLinear()
   .domain([0, d3.max(jsonData, d => d.visitors)])
   .range([height - margin.bottom, margin.top]);
@@ -38,33 +38,39 @@ const y = d3.scaleLinear()
 // met append voeg je een 'groep' toe aan een svg
 svg.append('g')
   .selectAll('rect')
-  .data(jsonData.sort((a, b) => d3.ascending(+a.edition.match(/\d+/), +b.edition.match(/\d+/))))
-  .join('a')
-  .attr('href', (d, i) => `#section-${i + 1}`)
+  .data(jsonData.sort((a, b) => d3.ascending(+a.edition.match(/\d+/), +b.edition.match(/\d+/))))//sorteren op waarde
+  .join('a')//voeg een link toe met join
+  .attr('href', (d, i) => `#section-${i + 1}`) //link naar de desbetreffende section
   .append('rect')
   .attr('x', (d, i) => x(i))
   .attr('y', height - margin.bottom)
   .attr('width', x.bandwidth())
   .attr('class', 'rectangle')
   .attr('height', 0)
-  .transition()
+  .transition()//animatie transition 1.5 seconde
   .duration(1500)
   .attr('fill', (d) => {
+    //verander de kleur naar ADE kleuren, zwart als het om een online editie gaat.
     if (d.edition === 'ADE 2020 online' || d.edition === 'ADE 2021 online') {
       return '#3b3b3b';
     } else {
       return '#FDCF57';
     }
   })
+  //bepaal de hoogte (y-as) op basis van de visitors
   .attr('y', (d) => y(d.visitors))
   .attr('height', (d) => height - margin.bottom - y(d.visitors));
 
 svg.selectAll('a')
+//hier selecteerd je de a links
   .on('click', function (event, d) {
+    //niet reloaden
     event.preventDefault();
+
     const sectionId = this.getAttribute('href').substring(1);
     const section = document.getElementById(sectionId);
     section.scrollIntoView({ behavior: 'smooth' });
+    //smooth scroll
   })
 
 function xAxis(g) {
@@ -72,8 +78,9 @@ function xAxis(g) {
     .call(d3.axisBottom(x).tickFormat((i) => jsonData[i].edition))
     .style('font-size', '18px')
     .selectAll('.tick text')
-    .style('fill', 'black')
+    .style('fill', 'black')//maak de 'tick' zwart, dat zijn de lijntjes
     .call(wrap, x.bandwidth());
+    //gebruik de functie 'wrap' voor het wrappen van de tekst
 }
 
 function yAxis(g) {
@@ -85,15 +92,17 @@ function yAxis(g) {
 function wrap(text, width) {
   text.each(function () {
     var text = d3.select(this),
-      words = text.text().split(/\s+/).reverse(),
+      words = text.text().split(/\s+/).reverse(),//split de tekst in woorden
       word,
       line = [],
       lineNumber = 0,
-      lineHeight = 1.1,
+      lineHeight = 1.1,//em lijnhoogte
       y = text.attr('y'),
       dy = parseFloat(text.attr('dy')) || 0,
       tspan = text.text(null).append('tspan').attr('x', 0).attr('y', y).attr('dy', dy + 'em');
 
+
+      //dit hieronder is uitgebruik door chatgpt, als ik het goed begrijp 'popt' hij de tekst als het te lang word.
     while ((word = words.pop())) {
       line.push(word);
       tspan.text(line.join(' '));

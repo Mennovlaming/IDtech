@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Define the JSON data directly in the JavaScript file
+  
   const jsonData = [
     { "edition": "ADE 2016", "visitors": 375000, "artists": 1800, "locations": 120, "outside": 20, "events": 450, "arests": 250 },
     { "edition": "ADE 2017", "visitors": 395000, "artists": 2200, "locations": 160, "outside": 30, "events": 500, "arests": 120 },
@@ -11,9 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
     { "edition": "ADE 2023", "visitors": 500000, "artists": 2900, "locations": 200, "outside": 40, "events": 1000, "arests": 200 }
   ];
 
-  // Fetch data from the directly defined JSON data
-  console.log('dataloader.js');
-  // Update the HTML content for each section
+ 
+  //werk de HTML bij voor elke sectie
   jsonData.forEach((editionData, index) => {
     const sectionId = `section-${index + 1}`;
     const artistsId = `artists-${index + 1}`;
@@ -21,24 +20,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const eventsId = `events-${index + 1}`;
     const arestsId = `arests-${index + 1}`;
 
-    // Update edition name
+    //werk de editienaam bij
     document.getElementById(sectionId).querySelector('h2').textContent = editionData.edition;
 
-    // Update artists (if available)
+    //werk artiesten bij (indien beschikbaar)
     if (editionData.artists) {
       updateWithCountUp(artistsId, editionData.artists);
     }
 
-    // Update locations (if available)
+    //werk locaties bij (indien beschikbaar)
     if (editionData.locations) {
       updateWithCountUp(locationsId, editionData.locations);
     }
 
-    // Update events (if available)
+    //werk evenementen bij (indien beschikbaar)
     if (editionData.events) {
       updateWithCountUp(eventsId, editionData.events);
     }
 
+    //werk arests bij (indien beschikbaar)
     if (editionData.arests) {
       updateWithCountUp(arestsId, editionData.arests);
     }
@@ -48,13 +48,14 @@ document.addEventListener("DOMContentLoaded", function () {
 function updateWithCountUp(elementId, value) {
   const element = document.getElementById(elementId);
   const initialValue = 0;
-  const duration = 2000; // milliseconds
-  const frameDuration = 1000 / 60; // 60 frames per second
+  const duration = 2000; //milliseconden
+  const frameDuration = 1000 / 60; //60 frames per seconde
   const totalFrames = Math.ceil(duration / frameDuration);
   const increment = value / totalFrames;
 
   let currentFrame = 0;
 
+  //telt op met currentFrame++, kijkt daarna of het minder is dan het moet zijn.
   function animate() {
     currentFrame++;
     const currentValue = initialValue + increment * currentFrame;

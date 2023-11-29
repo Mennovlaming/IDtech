@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-// Define the JSON data directly in the JavaScript file
+//efine the JSON data directly in the JavaScript file
 const jsonData = [
   { "edition": "ADE 2016", "visitors": 375000, "artists": 1800, "locations": 120, "outside": 20, "events": 450, "arests": 250 },
   { "edition": "ADE 2017", "visitors": 395000, "artists": 2200, "locations": 160, "outside": 30, "events": 500, "arests": 120 },
@@ -12,9 +12,6 @@ const jsonData = [
   { "edition": "ADE 2023", "visitors": 500000, "artists": 2900, "locations": 200, "outside": 40, "events": 1000, "arests": 200 }
 ];
 
-console.log('Data loaded successfully:', jsonData);
-
-// ... rest of your code
 
 //functie maken voor 1 ade editie in dit geval
 function createPieChart(edition, index) {
@@ -61,5 +58,5 @@ function createPieChart(edition, index) {
 
 //loop door data heen, en voor elke edition roep je de functie aan zodat hij een chart maakt.
 jsonData.forEach((edition, index) => {
-  createPieChart(edition, index + 1); //index + 1 om overeen te komen met section-ID
+  createPieChart(edition, index + 1); //index + 1 om niet op 0 te blijven.
 });
