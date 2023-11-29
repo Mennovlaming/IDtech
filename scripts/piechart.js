@@ -1,8 +1,10 @@
 import * as d3 from "d3";
 
-console.log('piechart.js');
+console.log('before data.json...');
 d3.json('./data.json').then((data) => {
-   
+  console.log('Data fetched successfully:', data);
+  // ... rest of your code
+
   //functie maken voor 1 ade editie in dit geval
   function createPieChart(edition, index) {
     //gebruik deze data voor de chart
@@ -34,7 +36,7 @@ d3.json('./data.json').then((data) => {
       .append("g")
       .attr("transform", `translate(${width / 2},${height / 2})`);
 
-    //hier word de chart getekend
+    //hier wordt de chart getekend
     const arcs = svg.selectAll(".arc")
       .data(pie(pieData))
       .enter().append("g")
@@ -50,4 +52,6 @@ d3.json('./data.json').then((data) => {
   data.forEach((edition, index) => {
     createPieChart(edition, index + 1); //index + 1 om overeen te komen met section-ID
   });
+}).catch((error) => {
+  console.error('Error fetching or processing data.json:', error);
 });
