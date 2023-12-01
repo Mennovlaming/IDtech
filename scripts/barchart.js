@@ -118,5 +118,8 @@ function wrap(text, width) {
 }
 
 svg.append('g').call(xAxis);
+//voeg x-as toe
 svg.append('g').call(yAxis);
+//voeg y-as toe
 svg.node();
+//voeg aan DOM toe
