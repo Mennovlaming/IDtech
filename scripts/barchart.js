@@ -18,6 +18,7 @@ const height = 600;
 const margin = { top: 60, bottom: 60, left: 40, right: 40 }
 
 //werkt als een query selector, selecteer hier de div waar een svg in komt.
+//met append voeg je iets toe aan het element, met .attr voeg je een eigenschap toe.
 const svg = d3.select('#intro')
   .append('svg')
   .attr('height', height - margin.top - margin.bottom)
@@ -64,7 +65,7 @@ svg.append('g')
 svg.selectAll('a')
 //hier selecteerd je de a links
   .on('click', function (event, d) {
-    //niet reloaden
+    //niet reloaden, blijven op dezelfde page
     event.preventDefault();
 
     const sectionId = this.getAttribute('href').substring(1);
